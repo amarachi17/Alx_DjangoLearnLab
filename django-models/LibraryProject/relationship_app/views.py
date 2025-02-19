@@ -29,11 +29,12 @@ class LogoutView(LogoutView):
     
 # Use Registration View
 def register(request):
-    form = UserCreationForm(request.POST)
-    if form.is_valid():
-        user = form.save()
-        login(request, user)
-        return redirect("home") # Redirect to home after successful registration
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+        # return redirect("home") # Redirect to home after successful registration
     
     else:
         form = UserCreationForm()
