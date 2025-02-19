@@ -7,5 +7,5 @@ urlpatterns = [
     path("library/<int:pk>/", LibraryDetailView.as_view(), name="library_detail"),
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
-    path("register/", register, name="register"),
+    path("views.register/", register, name="register"),
 ]
