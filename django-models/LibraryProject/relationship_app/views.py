@@ -20,11 +20,11 @@ class LibraryDetailView(DetailView):
     context_object_name = "library"
     
 # Login view using Django's built-in LoginView
-class CustomLoginView(LoginView):
+class LoginView(LoginView):
     template_name = "relationship_app/login.html"
     
 # Logout view using Django's built-in LogoutView
-class CustomLogoutView(LogoutView):
+class LogoutView(LogoutView):
     template_name = "relationship_app/logout.html"
     
 # Use Registration View
