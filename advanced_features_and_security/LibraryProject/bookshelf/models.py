@@ -35,9 +35,22 @@ class CustomUser(AbstractUser):
     # Add related_name to avoid conflits
     groups = models.ManyToManyField(Group, related_name="customuser_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions", blank=True)
-    
+
 
     objects = CustomUserManager()
 
     def __str__(self):
         return self.username
+    
+class Document(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        permissions = [
+            ("can_view", "Can View Document"),
+            ("can_create", "Can Create Document"),
+            ("can_edit", "Can Edit Document"),
+            ("can_delete", "Can Delete Document"),
+        ]
