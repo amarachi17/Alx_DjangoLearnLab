@@ -70,4 +70,17 @@ Your Django development environment is now set up and you can start creating you
 - Manually tested CSRF protention using the browser's developer tools.
 - Attemptes XSS injection to verify CSP headers are working.
 
+# Security Configurations
+
+## HTTPS Enforcement
+- All HTTP requests are redirected to HTTPS.
+- HSTS is enabled for 1 year with subdomain support and preloading.
+
+## Secure Cookies
+- SESSION_COOKIE_SECURE and CSRF_COOKIE_SECURE are set to `True` to prevent transmission over HTTP.
+
+## Secure Headers
+- X-Frame-Options set `DENY` (protects against clickjacking).
+- SECURE_CONTENT_TYPE_NOSNIFF enabled (prevents MIME-type sniffing).
+- SECURE_BROWSER_XSS_FILTER enabled (protects against XSS attacks).
 

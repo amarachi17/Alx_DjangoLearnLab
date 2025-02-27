@@ -37,6 +37,11 @@ SESSION_COOKIE_SECURE = True # Protect session cookies from being stolen
 
 SECURE_REDIRECT_EXEMPT = []
 
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 31536000 # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True # Apply HSTS to subdomains
+SECURE_HSTS_PRELOAD = True # Allow browsers to preload HSTS policy
+
 
 # Application definition
 
