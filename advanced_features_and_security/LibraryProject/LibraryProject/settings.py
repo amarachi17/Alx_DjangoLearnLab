@@ -41,6 +41,8 @@ SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 31536000 # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True # Apply HSTS to subdomains
 SECURE_HSTS_PRELOAD = True # Allow browsers to preload HSTS policy
+SECURE_PROXY_SSL_HEADER = True
+HTTP_X_FORWARDED_PROTO = True
 
 
 # Application definition
