@@ -52,3 +52,22 @@ Your Django development environment is now set up and you can start creating you
 3. Select a user and assign them to a group
 
 
+# Django Security Best Practices
+
+## 1. Configured Security Settings
+- `DEBUG = False`: Disabled debugging in production.
+- `CSRF_COOKIE_SECURE = True`: CSRF tokens only work over HTTPS.
+- `SESSION_COOKIE_SECURE = True`: Prevents session hijacking.
+- `SECURE_BROWSER_XSS_FILTER = True`: Protects against XSS.
+- `CSP`: Restricts allowed content sources.
+
+## 2. Secure Coding Practices
+- All forms include `{% csrf_token %}` for CSRF protection.
+- Django ORM prevents SQL injection.
+- Input validation is implemented to sanitize user data.
+
+## 3. Security Testing
+- Manually tested CSRF protention using the browser's developer tools.
+- Attemptes XSS injection to verify CSP headers are working.
+
+

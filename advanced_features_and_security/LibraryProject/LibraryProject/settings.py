@@ -24,9 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_h6l9&6wb)c2d-v$lxn%%u4@xdp3^7(7@$2n^%g@3lg@2(naye'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False # Disable debugging in production
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+SECURE_BROWSER_XSS_FILTER = True # Ensure XSS filtering in browsers
+X_FRAME_OPTIONS = "DENY"
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+CSRF_COOKIE_SECURE = True # Ensure CSRF tokens are only sent over HTTPS
+SESSION_COOKIE_SECURE = True # Protect session cookies from being stolen
+
+SECURE_REDIRECT_EXEMPT = []
 
 
 # Application definition
@@ -41,6 +50,11 @@ INSTALLED_APPS = [
     'bookshelf',
     'relationship_app',
 ]
+
+INSTALLED_APPS += ["csp"]
+CSP_DEFAULT_SRC = ("'self'") # Restrict all content to own site
+CSP_STYLE_SRC = ("'self'", "https://cdnjs.cloudflare.com") # Allow trusted from django.conf import settings
+CSP_SCRIPT_SRC = ("'self'",) # Block inline scripts to prevent XSS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
