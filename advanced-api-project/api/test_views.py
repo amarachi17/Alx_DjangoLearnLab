@@ -20,6 +20,14 @@ class BookAPITestCase(APITestCase):
         self.list_url = reverse("book-list") # Use the name defined in urls.py
         self.detail_url = reverse("book-detail", args=[self.book.id])
 
+        def test_crete_book_authentication(self):
+            self.client.login(username='testuser', password='testpass')
+            url = reverse('book-create')
+            data = {'title': 'Django for Beginners', 'author': 1, 'publication_year': 2019}
+            response = self.client.post(url, data, format='json')
+
+            self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
         def test_create_book(self):
             # Testing the Create function
             data = {
