@@ -11,3 +11,9 @@ Security and Permissions
 - CSRF Protection - Ensures secure form submission
 - Authentication Requires - Users must log in to creatw posts
 - Author Restrictions - Only the author can edit or delete theor posts
+
+Features 
+- Users can post, edit, delete blog posts
+- Users can comment on posts.
+- Only comment authors can edit or delete their comments.
+- All comments are displayed under each post.
