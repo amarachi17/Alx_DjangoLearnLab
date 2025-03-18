@@ -6,3 +6,8 @@ Features:
 - Profile management with editable user details
 - CSRF protection for security
 - Passwrd hashing using Django's built in system
+
+Security and Permissions
+- CSRF Protection - Ensures secure form submission
+- Authentication Requires - Users must log in to creatw posts
+- Author Restrictions - Only the author can edit or delete theor posts

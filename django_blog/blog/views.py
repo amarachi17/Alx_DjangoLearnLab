@@ -7,6 +7,11 @@ from django.contrib import messages
 from django import forms
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import Post
+from .forms import FormPost
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 # Create your views here.
 class CumstomUserCreationForm(UserCreationForm):
@@ -55,3 +60,45 @@ def Logout(request):
 def profile_view(request):
     profile = get_object_or_404(Profile, user=request.user)
     return render(request, "blog/profile.html", {"profile": profile})
+
+# List for all posts
+class ListViewPost(ListView):
+    model = Post
+    template_name = 'blog/list.html'
+    context_object_name = 'posts'
+
+# View details of a single post
+class DetailViewPost(DetailView):
+    model = Post
+    template_name = 'blog/detail.html'
+
+# Create a new post
+class CreateViewPost(CreateView, LoginRequiredMixin):
+    model = Post
+    form_class = FormPost 
+    template_name = 'blog/form.html'
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user # Assigns logged in user as author
+        return super().form_valid(form)
+    
+# Update a post (only authors can update)
+class UpdateViewPost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    form_class = FormPost
+    template_name = 'blog/form.html'
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author # Only author can edit
+
+# Delete a post (only authors can delete a post)
+class DeleteViewPost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    template_name = 'blog/delete.html'
+    success_url = reverse_lazy('post-list')
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author # Only author can delete 
+
