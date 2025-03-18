@@ -2,7 +2,7 @@ from django.urls import path
 from  .views import Register, Login, Logout, profile_view, search_posts
 from .views import ListViewPost, DeleteViewPost, CreateViewPost, UpdateViewPost, DetailViewPost
 from .views import CommentCreateView, CommentDeleteView, CommentUpdateView
-from .views import TaggedPostListView
+from .views import TaggedPostListView, search_posts
 from .models import Post
 
 urlpatterns = [

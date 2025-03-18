@@ -147,16 +147,21 @@ class TaggedPostListView(ListView):
     def get_queryset(self):
         tag = get_object_or_404(Tag, slug=self.kwargs.get('tag_slug'))
         return Post.objects.filter(tags__in=[tag])
+    
 def search_posts(request):
     query = request.GET.get('q')
-    posts = Post.objects.all()
 
     if query:
-        posts = posts.filter(
-            Q(title_icontains=query) |
-            Q(content_icontains=query) |
-            Q(tags_name_icontains = query)
+        results = Post.objects.filter(
+            title__icontains=query
+        ) | Post.objects.filter(
+            content__icontains=query
+        ) | Post.objects.filter(
+            tags__name__icontains=query
         ).distinct()
     
-    return render(request, 'blog/search_results.html', {'posts': posts, 'query': query})
+    else:
+        result = Post.objects.none()
+
+    return render(request, 'blog/search_results.html', {'results': results, 'query': query})
 
