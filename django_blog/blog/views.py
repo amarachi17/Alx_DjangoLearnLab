@@ -101,7 +101,7 @@ class DeleteViewPost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         post = self.get_object()
         return self.request.user == post.author # Only author can delete 
 
-def post_detail(request, pk):
+def CommentCreateView(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comments = post.comments.all()
     if request.method == 'POST':
@@ -117,7 +117,7 @@ def post_detail(request, pk):
         return render(request, 'blog/view.html', {'post': post, 'comments': comments, 'form': form})
     
 @login_required
-def comment_edit(request, pk):
+def CommentUpdateView(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     if request.user != comment.author:
         return redirect('post-detail', pk=comment.post.pk)
@@ -133,7 +133,7 @@ def comment_edit(request, pk):
     return render(request, 'blog/comment_form.html', {'form': form})
 
 @login_required
-def comment_delete(request, pk):
+def CommentDeleteView(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     if request.user != comment.author:
         return redirect('post-detail', pk=comment.post.pk)
