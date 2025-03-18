@@ -1,6 +1,7 @@
 from django import forms 
 from .models import Post
 from .models import Comment
+from taggit.forms import TagWidget
 
 class FormPost(forms.ModelForm):
     class Meta:
@@ -19,3 +20,6 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
+        widgets = {
+            'tags': TagWidget(),
+        }
