@@ -65,19 +65,19 @@ def profile_view(request):
 # List for all posts
 class ListViewPost(ListView):
     model = Post
-    template_name = 'blog/list.html'
+    template_name = 'blog/listing.html'
     context_object_name = 'posts'
 
 # View details of a single post
 class DetailViewPost(DetailView):
     model = Post
-    template_name = 'blog/view.html'
+    template_name = 'blog/viewing.html'
 
 # Create a new post
 class CreateViewPost(CreateView, LoginRequiredMixin):
     model = Post
     form_class = FormPost 
-    template_name = 'blog/create.html'
+    template_name = 'blog/creating.html'
     
     def form_valid(self, form):
         form.instance.author = self.request.user # Assigns logged in user as author
@@ -87,7 +87,7 @@ class CreateViewPost(CreateView, LoginRequiredMixin):
 class UpdateViewPost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = FormPost
-    template_name = 'blog/edit.html'
+    template_name = 'blog/editing.html'
 
     def test_func(self):
         post = self.get_object()
@@ -96,7 +96,7 @@ class UpdateViewPost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 # Delete a post (only authors can delete a post)
 class DeleteViewPost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    template_name = 'blog/delete.html'
+    template_name = 'blog/deleting.html'
     success_url = reverse_lazy('post-list')
 
     def test_func(self):
