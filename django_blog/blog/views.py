@@ -71,7 +71,7 @@ class ListViewPost(ListView):
 # View details of a single post
 class DetailViewPost(DetailView):
     model = Post
-    template_name = 'blog/viewing.html'
+    template_name = 'blog/view.html'
 
 # Create a new post
 class CreateViewPost(CreateView, LoginRequiredMixin):
