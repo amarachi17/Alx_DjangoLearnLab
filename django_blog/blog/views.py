@@ -65,7 +65,7 @@ def profile_view(request):
 # List for all posts
 class ListViewPost(ListView):
     model = Post
-    templates = 'blog/listing.html'
+    templates = 'blog/post_list.html'
     context_object_name = 'posts'
 
 # View details of a single post
