@@ -7,10 +7,15 @@ from rest_framework.authtoken.models import Token
 from .serializers import UserSerializer
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from .models import CustomUser
+from .models import CustomUser, UserFollowing
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
+from rest_framework import status, viewsets
 
+
+User = get_user_model()
 
 # Create your views here.
 class RegisterUserView(generics.CreateAPIView):
@@ -45,3 +50,19 @@ class UserProfileView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+class UserFollowingViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, user_id=None):
+        following_user = get_object_or_404(User, id=user_id)
+        if request.user == following_user:
+            return Response({'error': 'You cannot follow yourself.'}, status=status.HTTP_400_REQUEST)
+        UserFollowing.objects.get_or_create(user=request.user, following_user=following_user)
+        return Response({'status': 'following'}, status=status.HTTP_201_CREATED)
+    
+    def destroy(self, request, user_id=None):
+        following_user = get_object_or_404(User, id=user_id)
+        UserFollowing.objects.filter(user=request.user, following_user=following_user).delete()
+        return Response({'status': 'unfollowed'}, status=status.HTTP_204_NO_CONTENT)
+
