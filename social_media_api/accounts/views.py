@@ -8,6 +8,8 @@ from .serializers import UserSerializer
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from .models import CustomUser
+from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.
@@ -37,3 +39,9 @@ class LoginView(APIView):
         
         return Response({"error": "Invalid credentials"}, status=400)
 
+class UserProfileView(RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
