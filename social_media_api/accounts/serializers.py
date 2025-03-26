@@ -6,7 +6,7 @@ from .models import CustomUser
 User = get_user_model().objects.create_user
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField()
 
     class Meta:
         model = CustomUser
