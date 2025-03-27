@@ -29,7 +29,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [os.environ.get("social_media_api") + ".herokuapp.com"]
 
-SECURE_BROSWER_XSS_FILTER = True
+SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "DENY"
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True
