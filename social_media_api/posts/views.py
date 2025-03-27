@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, generics 
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework import filters
-from rest_framework import generics 
+from django.contrib.auth import get_user_model 
 from rest_framework.permissions import IsAuthenticated
 
+User = get_user_model()
 # Create your views here.
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')
@@ -30,5 +31,8 @@ class FeedView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_querset(self):
-        following_users = UserFollowing.objects.filter(user=self.request.user).values_list('following_user', flat=True)
+        user = self.request.user
+        following_users = user.following.all()
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
+    
+
